@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #080808;
+    color: #c8c8c8;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Subtle grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+  }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: #0d0d0d; }
+  ::-webkit-scrollbar-thumb { background: #2a2a2a; }
+
+  a { color: inherit; text-decoration: none; }
+  button { cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  textarea, input { font-family: 'DM Sans', sans-serif; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-3 px-7 py-3.5 bg-[#cc2936] text-white text-sm font-medium
+           transition-all duration-200 cursor-pointer border-0 leading-none;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background-color: #e63946;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(204,41,54,0.35);
+  }
+  .btn-primary:disabled { @apply opacity-40 cursor-not-allowed; }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 border border-[#2a2a2a] text-[#888] text-sm
+           transition-all duration-200 cursor-pointer bg-transparent;
+  }
+  .btn-outline:hover { @apply border-[#444] text-[#ccc]; }
+
+  .btn-ghost-red {
+    @apply inline-flex items-center gap-2 px-6 py-3 border border-[#7a1a21] text-[#cc2936] text-sm
+           transition-all duration-200 no-underline;
+  }
+  .btn-ghost-red:hover { @apply bg-[#cc2936] text-white border-[#cc2936]; }
+
+  .tag {
+    @apply inline-block font-mono text-[0.65rem] tracking-[0.12em] uppercase px-2.5 py-1
+           border border-[#2a2a2a] text-[#555] bg-[#111];
+  }
+  .tag-red {
+    @apply inline-block font-mono text-[0.65rem] tracking-[0.12em] uppercase px-2.5 py-1
+           border border-[#7a1a21] text-[#cc2936];
+    background: rgba(204,41,54,0.08);
+  }
+
+  .section-eyebrow {
+    @apply font-mono text-[0.65rem] tracking-[0.15em] uppercase text-[#444] mb-3;
+  }
+
+  .field-textarea {
+    @apply w-full bg-[#0f0f0f] border border-[#222] text-[#e0e0e0]
+           px-4 py-3.5 text-sm leading-relaxed resize-y outline-none
+           transition-colors duration-200;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+  }
+  .field-textarea::placeholder { color: #3a3a3a; }
+  .field-textarea:focus { border-color: #7a1a21; }
+
+  .divider { @apply border-t border-[#1a1a1a] w-full; }
+
+  .card {
+    @apply bg-[#0f0f0f] border border-[#1e1e1e];
+  }
+
+  .score-bar-track {
+    @apply h-0.5 bg-[#1e1e1e] overflow-hidden;
+  }
+  .score-bar-fill {
+    @apply h-full transition-all duration-700 ease-out;
+  }
+}
+
+/* Page transitions */
+.page-enter-active { transition: opacity 0.3s ease, transform 0.3s ease; }
+.page-leave-active { transition: opacity 0.2s ease, transform 0.2s ease; }
+.page-enter-from   { opacity: 0; transform: translateY(10px); }
+.page-leave-to     { opacity: 0; transform: translateY(-6px); }
+
+/* Step transitions */
+.step-enter-active { transition: opacity 0.22s ease, transform 0.22s ease; }
+.step-leave-active { transition: opacity 0.18s ease, transform 0.18s ease; }
+.step-enter-from   { opacity: 0; transform: translateX(16px); }
+.step-leave-to     { opacity: 0; transform: translateX(-10px); }
+
+/* Dim detail expand */
+@keyframes expandIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.dim-detail-enter { animation: expandIn 0.2s ease forwards; }
