@@ -121,7 +121,7 @@ ${formData.confidence || '(not provided)'}
     })
   })
 
-  console.log(response)
+  // console.log(response)
 
   if (!response.ok) {
     const err = await response.json().catch(() => ({}))
